@@ -1,15 +1,12 @@
-/* ---------- 
--- Tiago Gonçalves - University of Minho, 2021 --
+/*
+    Tiago Gonçalves & António Pina, UM - LIP, 2021
 
-Program that sends an integer from process with rank 0 
+    To run: 
+        Console 1: ./corhpx apps ctx 2 0 ../examples/libmessage_broadcast.so --hpx:hpx=localhost:1337 --hpx:expect-connecting-localities
+        Console 2: ./corhpx apps ctx 2 0 ../examples/libmessage_broadcast.so --hpx:hpx=localhost:1338 --hpx:agas=localhost:1337 --hpx:run-hpx-main --hpx:expect-connecting-localities --hpx:worker
+        With MPI: mpirun -np N ./corhpx apps ctx N 0 ../examples/libmessage_broadcast.so
+*/
 
-For execution in two separated consoles (two processes):
-    $ ./corhpx apps ctx 2 0 ../examples/libmessage_broadcast.so --hpx:hpx=localhost:1337 --hpx:expect-connecting-localities
-    $ ./corhpx apps ctx 2 0 ../examples/libmessage_broadcast.so --hpx:hpx=localhost:1338 --hpx:agas=localhost:1337 --hpx:run-hpx-main --hpx:expect-connecting-localities --hpx:worker
-or using mpi:
-    $ mpirun -np N ./corhpx apps ctx N 0 ../examples/libmessage_broadcast.so
-
----------- */
 
 #include "cor/cor.hpp"
 
@@ -51,5 +48,4 @@ void Main(int argc, char *argv[])
         std::cout << std::endl;
     }
 
-    //std::cout << agent_idp << "\t" << rank << "\t" << clos_idp << "\t" << clos_size << "\t" << parent_idp << "\n";
 }

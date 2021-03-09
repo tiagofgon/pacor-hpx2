@@ -19,15 +19,9 @@ public:
 	{
 		std::string basename = "AccessManager_basename";
 		if (hpx::get_locality_id() == 0) {
-			auto future = hpx::register_with_basename(basename, get_id(), 0).get();
-			// if(future.get()==true) {
-			//     std::cout << "TRUE" << std::endl;
-			// } else {
-			//     std::cout << "FALSE" << std::endl;
-			// }
-			
+			hpx::register_with_basename(basename, get_id(), 0).get();
 		} 
-			// std::cout << "AQUI!" << std::endl;
+
 		access_manager_component = hpx::find_from_basename(basename, 0).get();
 	}
 

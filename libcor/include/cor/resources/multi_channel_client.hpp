@@ -72,6 +72,8 @@ public:
     {}
 
 
+
+
 	/** Resource's interface **/
 	// method that returns the global idp of the resource, which is present in the class Resource
 	hpx::future<idp_t> IdpGlobal(hpx::launch::async_policy)
@@ -131,10 +133,6 @@ public:
 
 
 
-
-
-
-
 	/** Local Client's interface **/
 	// local idp of this resource
 	hpx::future<idp_t> Idp(hpx::launch::async_policy) {
@@ -162,18 +160,20 @@ public:
 		3 - Clousure
 		4 - ProtoAgent
 		5 - Agent
-		6 - MultiChannel
+		6 - Data
 		7 - Barrier
 		8 - Mutex
 		9 - RWMutex
-		10 - MultiChannel
+		10 - Operon
+		11 - UniChannel
+		12 - MultiChannel
 		*/
-		return hpx::make_ready_future(10);
+		return hpx::make_ready_future(12);
 	}
 
 	int GetComponentType()
 	{
-		return 10;
+		return 12;
 	}
 
 	// For compilation purposes only, it is never used here!
@@ -185,6 +185,8 @@ public:
 		return hpx::find_here();
 	}
 	
+
+
 
 private:
 	template <typename ... Args>

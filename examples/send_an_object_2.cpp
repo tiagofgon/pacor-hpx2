@@ -1,15 +1,15 @@
-/* ---------- 
--- Tiago Gonçalves - University of Minho, 2021 --
+/*
+    Tiago Gonçalves & António Pina, UM - LIP, 2021
 
-Program that send a user object from one process to another.
+    Program to be run in parallel with two processes, only.
+    Sends a user object from one process to another.
 
-For execution in two separated consoles (two processes):
-    $ ./corhpx apps ctx 2 0 ../examples/libsend_an_object.so --hpx:hpx=localhost:1337 --hpx:expect-connecting-localities
-    $ ./corhpx apps ctx 2 0 ../examples/libsend_an_object.so --hpx:hpx=localhost:1338 --hpx:agas=localhost:1337 --hpx:run-hpx-main --hpx:expect-connecting-localities --hpx:worker
-or using mpi:
-    $ mpirun -np 2 ./corhpx apps ctx 2 0 ../examples/libsend_an_object.so
+    To run: 
+        Console 1: ./corhpx apps ctx 2 0 ../examples/libsend_an_object_2.so --hpx:hpx=localhost:1337 --hpx:expect-connecting-localities
+        Console 2: ./corhpx apps ctx 2 0 ../examples/libsend_an_object_2.so --hpx:hpx=localhost:1338 --hpx:agas=localhost:1337 --hpx:run-hpx-main --hpx:expect-connecting-localities --hpx:worker
+        With MPI: mpirun -np 2 ./corhpx apps ctx 2 0 ../examples/libsend_an_object_2.so
+*/
 
----------- */
 
 #include "cor/cor.hpp"
 

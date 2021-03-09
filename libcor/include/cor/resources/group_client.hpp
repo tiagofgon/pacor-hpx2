@@ -69,6 +69,8 @@ public:
 	{}
 
 
+
+
 	/** Resource's interface **/
 	// method that returns the global idp of the resource, which is present in the class Resource
 	hpx::future<idp_t> IdpGlobal(hpx::launch::async_policy)
@@ -234,6 +236,8 @@ public:
 	}
 
 
+
+
 	/** Local Client's interface **/
 	// local idp of this resource
 	hpx::future<idp_t> Idp(hpx::launch::async_policy) {
@@ -265,6 +269,9 @@ public:
 		7 - Barrier
 		8 - Mutex
 		9 - RWMutex
+		10 - Operon
+		11 - UniChannel
+		12 - MultiChannel
 		*/
 		return hpx::make_ready_future(2);
 	}
@@ -284,11 +291,12 @@ public:
 	}
 	
 
+
+
 private:
 	hpx::future<hpx::id_type> create_server(idp_t idp, std::string const& module) {
 		return hpx::local_new<Group>(idp, module);
 	}
-
 	hpx::future<hpx::id_type> create_server_remote(idp_t idp, hpx::id_type locality, std::string const& module) {
 		return hpx::new_<Group>(locality, idp, module);
 	}

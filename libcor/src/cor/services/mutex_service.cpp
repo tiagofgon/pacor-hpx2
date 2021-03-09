@@ -6,7 +6,7 @@ namespace cor {
 
 MutexService::MutexService()
 {
-    std::cout << "Criado um componente MutexService" << std::endl;
+    // std::cout << "Criado um componente MutexService" << std::endl;
 }
 
 MutexService::~MutexService() = default;

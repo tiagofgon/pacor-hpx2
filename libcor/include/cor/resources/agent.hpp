@@ -72,6 +72,7 @@ public:
     >::type
     {};
 
+
     /* Mailbox's interface */
     void Send1(idp_t dest, Message const& msg);                          // Unicast
     void Send2(std::vector<idp_t> const& dests, Message const& msg);

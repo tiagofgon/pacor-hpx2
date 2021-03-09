@@ -1,8 +1,9 @@
-/* ---------- 
--- Tiago Gonçalves - University of Minho, 2021 --
+/*
+    Tiago Gonçalves & António Pina, UM - LIP, 2021
 
-To run: ./corhpx apps ctx 1 0 ../examples/spawn.so
----------- */
+    To run: 
+        ./corhpx apps ctx 1 0 ../examples/libspawn.so
+*/
 
 
 #include "cor/cor.hpp"

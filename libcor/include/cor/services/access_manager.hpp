@@ -6,7 +6,7 @@
 namespace cor
 {
 
-// Component to tell how is the first process of a closure
+// Component to discover how is the first process of a closure
 struct AccessManager: public hpx::components::locking_hook< hpx::components::component_base<AccessManager> >
 {
 public:

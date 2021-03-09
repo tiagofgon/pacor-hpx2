@@ -65,6 +65,8 @@ public:
 	}
 
 
+
+
 	/** Resource's interface **/
 	// method that returns the global idp of the resource, which is present in the class Resource
 	hpx::future<idp_t> IdpGlobal(hpx::launch::async_policy)
@@ -104,6 +106,8 @@ public:
 		typedef Resource::GetLocalityID_action_Resource action_type;
 		return action_type()(base_type::get_id());	
 	}
+
+
 
 
 	/** Executor's interface **/
@@ -224,6 +228,7 @@ public:
 
 
 
+
 	/** Local Client's interface **/
 	// local idp of this resource
 	hpx::future<idp_t> Idp(hpx::launch::async_policy) {
@@ -256,6 +261,8 @@ public:
 		8 - Mutex
 		9 - RWMutex
 		10 - Operon
+		11 - UniChannel
+		12 - MultiChannel
 		*/
 		return hpx::make_ready_future(10);
 	}
@@ -273,6 +280,9 @@ public:
 	hpx::id_type GetMailboxGid() {
 		return hpx::find_here();
 	}
+	
+
+
 	
 private:
 	hpx::future<hpx::id_type> create_server(idp_t idp, std::size_t num_hpx_threads) {

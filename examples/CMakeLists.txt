@@ -57,29 +57,29 @@ target_link_libraries(
 )
 
 
-# send_an_object - HPX
-add_library(send_an_object SHARED send_an_object.cpp)
-target_compile_features(send_an_object PUBLIC cxx_std_17)
-set_target_properties(send_an_object PROPERTIES CXX_EXTENSIONS OFF)
-set_target_properties(send_an_object PROPERTIES POSITION_INDEPENDENT_CODE ON)
-set_target_properties(send_an_object PROPERTIES COMPILE_FLAGS -O2)
-set_target_properties(send_an_object PROPERTIES PREFIX "lib" SUFFIX ".so")
+# send_an_object_2 - HPX
+add_library(send_an_object_2 SHARED send_an_object_2.cpp)
+target_compile_features(send_an_object_2 PUBLIC cxx_std_17)
+set_target_properties(send_an_object_2 PROPERTIES CXX_EXTENSIONS OFF)
+set_target_properties(send_an_object_2 PROPERTIES POSITION_INDEPENDENT_CODE ON)
+set_target_properties(send_an_object_2 PROPERTIES COMPILE_FLAGS -O2)
+set_target_properties(send_an_object_2 PROPERTIES PREFIX "lib" SUFFIX ".so")
 target_link_libraries(
-    send_an_object
+    send_an_object_2
     PRIVATE
         libcor
         HPX::hpx
 )
 
-# send_an_object_simple - HPX
-add_library(send_an_object_simple SHARED send_an_object_simple.cpp)
-target_compile_features(send_an_object_simple PUBLIC cxx_std_17)
-set_target_properties(send_an_object_simple PROPERTIES CXX_EXTENSIONS OFF)
-set_target_properties(send_an_object_simple PROPERTIES POSITION_INDEPENDENT_CODE ON)
-set_target_properties(send_an_object_simple PROPERTIES COMPILE_FLAGS -O2)
-set_target_properties(send_an_object_simple PROPERTIES PREFIX "lib" SUFFIX ".so")
+# send_an_object_1 - HPX
+add_library(send_an_object_1 SHARED send_an_object_1.cpp)
+target_compile_features(send_an_object_1 PUBLIC cxx_std_17)
+set_target_properties(send_an_object_1 PROPERTIES CXX_EXTENSIONS OFF)
+set_target_properties(send_an_object_1 PROPERTIES POSITION_INDEPENDENT_CODE ON)
+set_target_properties(send_an_object_1 PROPERTIES COMPILE_FLAGS -O2)
+set_target_properties(send_an_object_1 PROPERTIES PREFIX "lib" SUFFIX ".so")
 target_link_libraries(
-    send_an_object_simple
+    send_an_object_1
     PRIVATE
         libcor
         HPX::hpx
@@ -184,57 +184,29 @@ target_link_libraries(
 	    HPX::hpx
 )
 
-# data_with_user_object
-add_library(data_with_user_object SHARED data_with_user_object.cpp)
-target_compile_features(data_with_user_object PUBLIC cxx_std_17)
-set_target_properties(data_with_user_object PROPERTIES CXX_EXTENSIONS OFF)
-set_target_properties(data_with_user_object PROPERTIES POSITION_INDEPENDENT_CODE ON)
-set_target_properties(data_with_user_object PROPERTIES COMPILE_FLAGS -O2)
-set_target_properties(data_with_user_object PROPERTIES PREFIX "lib" SUFFIX ".so")
+# data_example_1
+add_library(data_example_1 SHARED data_example_1.cpp)
+target_compile_features(data_example_1 PUBLIC cxx_std_17)
+set_target_properties(data_example_1 PROPERTIES CXX_EXTENSIONS OFF)
+set_target_properties(data_example_1 PROPERTIES POSITION_INDEPENDENT_CODE ON)
+set_target_properties(data_example_1 PROPERTIES COMPILE_FLAGS -O2)
+set_target_properties(data_example_1 PROPERTIES PREFIX "lib" SUFFIX ".so")
 target_link_libraries(
-    data_with_user_object
+    data_example_1
     PRIVATE
         libcor
 	    HPX::hpx
 )
 
-# heat
-add_library(heat SHARED heat.cpp)
-target_compile_features(heat PUBLIC cxx_std_17)
-set_target_properties(heat PROPERTIES CXX_EXTENSIONS OFF)
-set_target_properties(heat PROPERTIES POSITION_INDEPENDENT_CODE ON)
-set_target_properties(heat PROPERTIES COMPILE_FLAGS -O2)
-set_target_properties(heat PROPERTIES PREFIX "lib" SUFFIX ".so")
+# data_example_2
+add_library(data_example_2 SHARED data_example_2.cpp)
+target_compile_features(data_example_2 PUBLIC cxx_std_17)
+set_target_properties(data_example_2 PROPERTIES CXX_EXTENSIONS OFF)
+set_target_properties(data_example_2 PROPERTIES POSITION_INDEPENDENT_CODE ON)
+set_target_properties(data_example_2 PROPERTIES COMPILE_FLAGS -O2)
+set_target_properties(data_example_2 PROPERTIES PREFIX "lib" SUFFIX ".so")
 target_link_libraries(
-    heat
-    PRIVATE
-        libcor
-	    HPX::hpx
-)
-
-# heat_local_parallel
-add_library(heat_local_parallel SHARED heat_local_parallel.cpp)
-target_compile_features(heat_local_parallel PUBLIC cxx_std_17)
-set_target_properties(heat_local_parallel PROPERTIES CXX_EXTENSIONS OFF)
-set_target_properties(heat_local_parallel PROPERTIES POSITION_INDEPENDENT_CODE ON)
-set_target_properties(heat_local_parallel PROPERTIES COMPILE_FLAGS -O2)
-set_target_properties(heat_local_parallel PROPERTIES PREFIX "lib" SUFFIX ".so")
-target_link_libraries(
-    heat_local_parallel
-    PRIVATE
-        libcor
-	    HPX::hpx
-)
-
-# heat_distributed_parallel
-add_library(heat_distributed_parallel SHARED heat_distributed_parallel.cpp)
-target_compile_features(heat_distributed_parallel PUBLIC cxx_std_17)
-set_target_properties(heat_distributed_parallel PROPERTIES CXX_EXTENSIONS OFF)
-set_target_properties(heat_distributed_parallel PROPERTIES POSITION_INDEPENDENT_CODE ON)
-set_target_properties(heat_distributed_parallel PROPERTIES COMPILE_FLAGS -O2)
-set_target_properties(heat_distributed_parallel PROPERTIES PREFIX "lib" SUFFIX ".so")
-target_link_libraries(
-    heat_distributed_parallel
+    data_example_2
     PRIVATE
         libcor
 	    HPX::hpx
@@ -304,8 +276,8 @@ install(
         basicOperations
         callableModule
         parallel
-        send_an_object
-        send_an_object_simple
+        send_an_object_1
+        send_an_object_2
         message_broadcast
         spawn
         inter_closure
@@ -313,10 +285,8 @@ install(
         create_remote
         server_rpc
         client_rpc
-        data_with_user_object
-        heat
-        heat_local_parallel
-        heat_distributed_parallel
+        data_example_1
+        data_example_2
         queue_program
         stencil2d
         multichannel_example

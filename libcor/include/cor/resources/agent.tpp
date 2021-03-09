@@ -2,7 +2,7 @@
 
 
 namespace cor {
-
+    
 template <typename R, typename ... P>
 Agent<R(P...)>::~Agent() = default;
 
@@ -23,6 +23,8 @@ Agent<R(P...)>::Agent(idp_t idp, std::string const& module, std::string const& f
 {
     // std::cout << "Criado um componente \"Agent\", com idp: " << idp << std::endl;
 }
+
+
 
 
 /* Executor's interface */
@@ -69,6 +71,8 @@ idp_t Agent<R(P...)>::GetExecutorIdp()
 {
     return _executor.GetExecutorIdp();
 }
+
+
 
 
 /* Mailbox's interface */
@@ -119,6 +123,8 @@ hpx::id_type Agent<R(P...)>::GetMailboxGid()
 {
     return _mailBox.GetGid();
 }
+
+
 
 
 }

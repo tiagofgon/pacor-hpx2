@@ -99,7 +99,7 @@ auto Container::Run(idp_t idp, Args... args)
     // ctrl[1] = 'R';
     // return global::rpc->Run<T>(idp, ctrl, args...);
     auto agent = GetLocalResource<T>(idp);
-    return agent->Run(hpx::launch::async, args...).get();
+    return agent->Run_Container(args...);
     //return agent->Run(args...);
 }
 

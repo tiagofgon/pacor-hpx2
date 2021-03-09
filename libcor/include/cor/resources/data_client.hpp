@@ -3,7 +3,6 @@
 
 #include "cor/resources/data.hpp"
 #include "cor/services/mutexRW_service_client.hpp"
-
 #include "cor/services/resource_manager_global.hpp"
 
 #include <hpx/hpx.hpp>
@@ -96,6 +95,8 @@ public:
 		std::string basename = std::to_string(idp) + "Datamutex";
 		auto future = hpx::register_with_basename(basename, mutex->GetGid(), 0).get();
 	}
+
+
 
 
 	/** Resource's interface **/
@@ -200,20 +201,18 @@ public:
 
     hpx::future<T> Fetch(hpx::launch::async_policy)
     {
-		return hpx::async([&](){
-			AcquireRead();
-			typedef typename Data<T>::Fetch_action_Data action_type;
-			auto dado = hpx::async<action_type>(base_type::get_id());
-			ReleaseRead();
-			return dado;
-		});
+		AcquireRead();
+		typedef typename Data<T>::Fetch_action_Data action_type;
+		auto dado = hpx::async<action_type>(base_type::get_id());
+		ReleaseRead();
+		return dado;
     }
 
     T Fetch()
     {
 		AcquireRead();
 		typedef typename Data<T>::Fetch_action_Data action_type;
-		auto dado = hpx::async<action_type>(base_type::get_id()).get();
+		auto dado = action_type()(base_type::get_id());
 		ReleaseRead();
 		return dado;
     }
@@ -279,6 +278,9 @@ public:
 		7 - Barrier
 		8 - Mutex
 		9 - RWMutex
+		10 - Operon
+		11 - UniChannel
+		12 - MultiChannel
 		*/
 		return hpx::make_ready_future(6);
 	}
@@ -292,6 +294,7 @@ public:
 	{
 		hpx::id_type resource_manager_global_component = hpx::find_from_basename("ResourceManagerGlobal_basename", 0).get();
 		typedef ResourceManagerGlobal::GetGidFromIdp_action_ResourceManagerGlobal action_type;
+		// get gid of domain_target
 		hpx::id_type gid = hpx::async<action_type>(resource_manager_global_component, domain_target).get();
 
 		auto locality = hpx::get_colocation_id(hpx::launch::sync, gid);
@@ -302,7 +305,6 @@ public:
 		return;
 	}
 
-
 	// For compilation purposes only, it is never used here!
 	hpx::future<hpx::id_type> GetMailboxGid(hpx::launch::async_policy) {
 		return hpx::make_ready_future(hpx::find_here());
@@ -312,12 +314,14 @@ public:
 		return hpx::find_here();
 	}
 	
+
+
+
 private:
 	template <typename ... Args>
 	hpx::future<hpx::id_type> create_server(idp_t idp, Args&&... args) {
 		return hpx::local_new<Data<T>>(idp, std::forward<Args>(args)...);
 	}
-
 	template <typename ... Args>
 	hpx::future<hpx::id_type> create_server_remote(idp_t idp, hpx::id_type locality, Args&&... args) {
 		return hpx::new_<Data<T>>(locality, idp, std::forward<Args>(args)...);
@@ -342,9 +346,9 @@ private:
 		// if the Data component is not in the current locality, migrate
 		if(hpx::find_here() != hpx::get_colocation_id(hpx::launch::sync, this->get_id())) {
 
-			std::cout << "É preciso migrar" << std::endl;
+			//std::cout << "É preciso migrar" << std::endl;
 			Migrate_hpx(hpx::find_here()).get();
-			std::cout << "Componente migrado" << std::endl;
+			//std::cout << "Componente migrado" << std::endl;
 			ptr = hpx::get_ptr<Data<T>>(hpx::launch::sync, this->get_id());
 		}
 		else {

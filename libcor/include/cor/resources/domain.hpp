@@ -71,9 +71,6 @@ public:
     std::unique_ptr<T> GetLocalResource(idp_t idp);
 
     template <typename T, typename ... Args>
-    std::unique_ptr<T> CreateLocal_agent(idp_t ctx, std::string const& name, Args ... args);
-
-    template <typename T, typename ... Args>
     std::unique_ptr<T> CreateLocal(idp_t ctx, std::string const& name, Args ... args);
 
     template <typename T, typename ... Args>
@@ -117,14 +114,6 @@ public:
     : hpx::actions::make_action<
         decltype(&Domain::GetLocalResource<T>),
         &Domain::GetLocalResource<T>
-    >::type
-    {};
-
-    template <typename T, typename ... Args>
-    struct CreateLocal_agent_action_Domain
-    : hpx::actions::make_action<
-        decltype(&Domain::CreateLocal_agent<T, Args...>),
-        &Domain::CreateLocal_agent<T, Args...>
     >::type
     {};
 

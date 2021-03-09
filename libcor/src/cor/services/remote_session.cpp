@@ -31,13 +31,6 @@ RemoteSession::~RemoteSession() = default;
 void RemoteSession::Run()
 {
     _th_svc = std::move(std::thread(&RemoteSession::operator(), this));
-    // future = hpx::async([this](){
-    //     this->operator()();
-    // });
-
-    // hpx::apply([this](){
-    //     this->operator()();
-    // });
 }
 
 void RemoteSession::Wait()

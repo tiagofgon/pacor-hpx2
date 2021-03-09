@@ -43,6 +43,7 @@ void ResourceManager::CreateInitialContext(std::string const& ctrl)
     }
 }
 
+// versao anterior placor
 void ResourceManager::CleanInitialContext()
 {
     // //std::cout << "BEGIN CleanInitialContext" << std::endl;
@@ -100,6 +101,7 @@ bool ResourceManager::ContainsResource(idp_t idp)
     return res;
 }
 
+// versao anterior placor
 std::string ResourceManager::SearchResource(idp_t idp)
 {
     // std::string ctrl;

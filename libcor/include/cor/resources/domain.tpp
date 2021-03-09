@@ -10,14 +10,6 @@ std::unique_ptr<T> Domain::GetLocalResource(idp_t idp)
 }
 
 template <typename T, typename ... Args>
-std::unique_ptr<T> Domain::CreateLocal_agent(idp_t ctx, std::string const& name, Args ... args)
-{
-    std::cout << "Domain::CreateLocal_agent" << std::endl;
-    //return _container.CreateLocal_test<T, Args...>(ctx, name, std::forward<Args>(args)...);
-    return nullptr;
-}
-
-template <typename T, typename ... Args>
 std::unique_ptr<T> Domain::CreateLocal(idp_t ctx, std::string const& name, Args ... args)
 {
     return _container.CreateLocal<T, Args...>(ctx, name, args...);

@@ -59,7 +59,7 @@ public:
     {}
 
 	// Standard constructor with parameters
-    UniChannel_Client(idp_t idp) :
+    UniChannel_Client(idp_t idp, std::string type) :
         base_type(create_server(idp)),
 		_idp(idp)
     {}
@@ -68,6 +68,7 @@ public:
     //     base_type(create_server_remote(idp, locality)),
 	// 	_idp(idp)
     // {}
+
 
 
 
@@ -130,10 +131,6 @@ public:
 
 
 
-
-
-
-
 	/** Local Client's interface **/
 	// local idp of this resource
 	hpx::future<idp_t> Idp(hpx::launch::async_policy) {
@@ -161,18 +158,20 @@ public:
 		3 - Clousure
 		4 - ProtoAgent
 		5 - Agent
-		6 - UniChannel
+		6 - Data
 		7 - Barrier
 		8 - Mutex
 		9 - RWMutex
-		10 - UniChannel
+		10 - Operon
+		11 - UniChannel
+		12 - MultiChannel
 		*/
-		return hpx::make_ready_future(10);
+		return hpx::make_ready_future(11);
 	}
 
 	int GetComponentType()
 	{
-		return 10;
+		return 11;
 	}
 
 	// For compilation purposes only, it is never used here!
@@ -185,11 +184,12 @@ public:
 	}
 	
 
+
+
 private:
 	hpx::future<hpx::id_type> create_server(idp_t idp) {
 		return hpx::local_new<UniChannel<T>>(idp);
 	}
-
 	hpx::future<hpx::id_type> create_server_remote(idp_t idp, hpx::id_type locality) {
 		return hpx::new_<UniChannel<T>>(locality, idp);
 	}

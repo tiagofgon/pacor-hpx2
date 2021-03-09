@@ -157,8 +157,6 @@ private:
     std::string hpx_address;
     int hpx_port;
 
-    // std::string agas_address = "localhost"; //"192.168.85.245";
-    // int agas_port = 1337;
     std::string agas_address;
     int agas_port;
 

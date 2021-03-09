@@ -1,9 +1,10 @@
-/*|────────────────────────────────────────────────────────|*/
-/*|   Tiago Gonçalves - University of Minho - LIP, 2021    |*/
-/*|────────────────────────────────────────────────────────|*/
-
 /*
-    To run: ./corhpx apps ctx 1 0 ../examples/libdata_with_user_object.so --hpx:ini=hpx.component_paths=../examples
+    Tiago Gonçalves & António Pina, UM - LIP, 2021
+
+    Compile with --hpx:ini=hpx.component_paths= $location_of_the_example
+    
+    To run: 
+        ./corhpx apps ctx 1 0 ../examples/libdata_example_1.so --hpx:ini=hpx.component_paths=../examples
 */
 
 #include "cor/cor.hpp"
@@ -14,13 +15,13 @@ extern "C"
 }
 
 
-class MyObject
+class Object_1
 {
 public:
     friend class hpx::serialization::access;
 
-    MyObject() = default;
-    ~MyObject() = default;
+    Object_1() = default;
+    ~Object_1() = default;
 
 	auto operator()(int elem) {
 		std::cout << id << " ";
@@ -48,23 +49,23 @@ private:
         ar & name;
 	}
 };
-REGISTER_DATA(MyObject); // need to register new Data type
+REGISTER_DATA(Object_1); // need to register new Data type
 
 
 // Functions to interact with the Data
-struct Funcion_object1 {
-    void operator()(MyObject &obj, int i) {
+struct Funcion_Object_1_1 {
+    void operator()(Object_1 &obj, int i) {
         obj.setId(i);
     }
 };
-hpx::function<void(MyObject&, int)> setId = Funcion_object1();
+hpx::function<void(Object_1&, int)> setId = Funcion_Object_1_1();
 
-struct Funcion_object2 {
-    size_t operator()(MyObject &obj) {
+struct Funcion_Object_1_2 {
+    size_t operator()(Object_1 &obj) {
         return obj.getId();
     }
 };
-hpx::function<size_t(MyObject&)> getId = Funcion_object2();
+hpx::function<size_t(Object_1&)> getId = Funcion_Object_1_2();
 
 
 
@@ -76,9 +77,7 @@ void Main(int argc, char *argv[])
     auto agent_idp = domain->GetActiveResourceIdp();
     auto agent = domain->GetLocalResource<cor::Agent_Client<void(int,char**)>>(agent_idp);
 
-
-    // // criar um dado no qual irá ser escrito o idp do agente que irá ser criado
-    auto data = domain->CreateLocal<cor::Data_Client<MyObject>>(domain->Idp(), "data");
+    auto data = domain->CreateLocal<cor::Data_Client<Object_1>>(domain->Idp(), "data");
 
     // setId with 6 through an action
     data->Run(setId, 6).get();

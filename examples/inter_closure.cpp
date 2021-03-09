@@ -5,6 +5,7 @@
 
 Console 1: ./corhpx apps ctx 2 0 ../examples/libinter_closure.so --hpx:hpx=localhost:1337 3
 Console 2: ./corhpx apps ctx 2 0 ../examples/libinter_closure.so --hpx:hpx=localhost:1338 --hpx:agas=localhost:1337 --hpx:run-hpx-main --hpx:expect-connecting-localities --hpx:worker 3
+With MPI: mpirun -np 2 ./corhpx apps ctx 2 0 ../examples/libinter_closure.so --hpx:ini=hpx.component_paths=../examples
 ---------- */
 
 #include <iostream>

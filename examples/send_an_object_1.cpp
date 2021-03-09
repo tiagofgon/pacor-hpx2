@@ -11,6 +11,20 @@ or using mpi:
 
 ---------- */
 
+
+/*
+    Tiago Gonçalves & António Pina, UM - LIP, 2021
+
+    Program to be run in parallel with two processes, only.
+    Sends an object from one process to another.
+
+    To run: 
+        Console 1: ./corhpx apps ctx 2 0 ../examples/libsend_an_object_1.so --hpx:hpx=localhost:1337 --hpx:expect-connecting-localities
+        Console 2: ./corhpx apps ctx 2 0 ../examples/libsend_an_object_1.so --hpx:hpx=localhost:1338 --hpx:agas=localhost:1337 --hpx:run-hpx-main --hpx:expect-connecting-localities --hpx:worker
+        With MPI: mpirun -np 2 ./corhpx apps ctx 2 0 ../examples/libsend_an_object_1.so
+*/
+
+
 #include "cor/cor.hpp"
 
 

@@ -14,7 +14,6 @@
 #include "cor/resources/rwmutex_client.hpp"
 #include "cor/resources/agent_client.hpp"
 #include "cor/resources/operon_client.hpp"
-#include "cor/resources/duplex_channel_client.hpp"
 #include "cor/resources/multi_channel_client.hpp"
 #include "cor/resources/uni_channel_client.hpp"
 
@@ -66,9 +65,6 @@ HPX_REGISTER_CHANNEL(double)
 HPX_REGISTER_CHANNEL(data_type);
 HPX_REGISTER_CHANNEL(idp_t);
 HPX_REGISTER_CHANNEL(data_type2);
-
-// DuplexChannel types
-REGISTER_DUPLEXCHANNEL(data_type2)
 
 
 // MultiChannel types

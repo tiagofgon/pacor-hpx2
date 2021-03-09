@@ -1,6 +1,9 @@
-/* ---------- 
--- Tiago Gonçalves - University of Minho, 2021 --
----------- */
+/*
+    Tiago Gonçalves & António Pina, UM - LIP, 2021
+
+    This module can only be loaded from other modules, 
+    shouldn't be executed directly
+*/
 
 #include "cor/cor.hpp"
 

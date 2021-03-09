@@ -70,7 +70,7 @@ public:
 		_idp(idp),
 		_idp_agent(0)
 	{
-		global::pod->setDomainIdp(idp); // Update domain idp variable's Pod
+		global::pod->setDomainIdp(idp); // Update domain idp of variable's Pod
 	}
 
 	// This can only be done when remote domains will be implemented!
@@ -79,8 +79,10 @@ public:
 		_idp(idp),
 		_idp_agent(0)
 	{
-		global::pod->setDomainIdp(idp); // Update domain idp variable's Pod
+		global::pod->setDomainIdp(idp); // Update domain idp of variable's Pod
 	}
+
+
 
 
 	/** Resource's interface **/
@@ -122,6 +124,8 @@ public:
 		typedef Resource::GetLocalityID_action_Resource action_type;
 		return action_type()(base_type::get_id());	
 	}
+
+
 
 
 	/** Dynamic organizer's interface **/
@@ -472,14 +476,6 @@ public:
 		return action_type()(this->get_id(), idp); 
 	}
 
-	// Funcao para apagar
-	template <typename T, typename ... Args>
-	hpx::future<std::unique_ptr<T>> CreateLocal_agent(hpx::launch::async_policy, idp_t ctx, std::string const& name, Args ... args)
-	{
-		typedef cor::Domain::CreateLocal_agent_action_Domain<T, Args...> action_type;
-		return hpx::async<action_type>(this->get_id(), ctx, name, args...);
-	}
-
 	template <typename T, typename ... Args>
 	hpx::future<std::unique_ptr<T>> CreateLocal(hpx::launch::async_policy, idp_t ctx, std::string const& name, Args ... args)
 	{
@@ -547,7 +543,6 @@ public:
 	template <typename T, typename ... Args>
 	std::unique_ptr<T> CreateCollective(idp_t ctx, std::string const& name, unsigned int total_members, Args ... args)
 	{
-		//return CreateCollective_action<T, Args...>(ctx, name, total_members, std::forward<Args>(args)...);
 		std::shared_ptr<Domain> ptr = hpx::get_ptr<Domain>(hpx::launch::sync, this->get_id());
 		return ptr->CreateCollective1<T, Args...>(ctx, name, total_members, args...);
 	}
@@ -563,27 +558,25 @@ public:
     template <typename T, typename ... Args>
     std::unique_ptr<T> CreateCollective(idp_t clos, idp_t ctx, std::string const& name, Args ... args)
 	{
-		//return CreateCollective_action<T, Args...>(clos, ctx, name, std::forward<Args>(args)...);
 		auto active_rsc_idp = GetActiveResourceIdp(); // I'll get the idp of the current agent that will be needed in the Pod
 		std::shared_ptr<Domain> ptr = hpx::get_ptr<Domain>(hpx::launch::sync, this->get_id());
 		return ptr->CreateCollective2<T, Args...>(active_rsc_idp, clos, ctx, name, args...);
 	}
 
 	// return a future, the funcion Run from executor return allways a future. 
-	// in this case, we do .get(), but this get stands for async's future, not Run'future
-    template <typename T, typename ... Args>
-    auto Run(hpx::launch::async_policy, idp_t idp, Args... args)
-	{
-		typedef cor::Domain::Run_action_Domain<T, Args...> action_type;
-		return hpx::async<action_type>(this->get_id(), idp, args...).get();
-	}
-
 	// return a future
     template <typename T, typename ... Args>
     auto Run(idp_t idp, Args... args)
 	{
 		typedef cor::Domain::Run_action_Domain<T, Args...> action_type;
 		return action_type()(this->get_id(), idp, args...);
+	}
+
+    template <typename T, typename ... Args>
+    auto Run(hpx::launch::sync_policy, idp_t idp, Args... args)
+	{
+		typedef cor::Domain::Run_action_Domain<T, Args...> action_type;
+		return action_type()(this->get_id(), idp, args...).get();
 	}
 
 	hpx::future<idp_t> Spawn(hpx::launch::async_policy, std::string const& context, unsigned int npods, std::string const& module, std::vector<std::string> const& args, std::vector<std::string> const& hosts)
@@ -599,6 +592,8 @@ public:
 		typedef cor::Domain::Spawn_action_Domain action_type;
 		return action_type()(this->get_id(), context, npods, parent, module, args, hosts); 
 	}
+
+
 
 
 	/** Local Client's interface **/
@@ -632,6 +627,9 @@ public:
 		7 - Barrier
 		8 - Mutex
 		9 - RWMutex
+		10 - Operon
+		11 - UniChannel
+		12 - MultiChannel
 		*/
 		return hpx::make_ready_future(1);
 	}
@@ -651,11 +649,12 @@ public:
 	}
 	
 
+
+
 private:
 	hpx::future<hpx::id_type> create_server(idp_t idp, std::string const& module) {
 		return hpx::local_new<Domain>(idp, module);
 	}
-
 	hpx::future<hpx::id_type> create_server_remote(idp_t idp, hpx::id_type locality, std::string const& module) {
 		return hpx::new_<Domain>(locality, idp, module);
 	}
@@ -666,7 +665,7 @@ private:
 	}
 
 	idp_t _idp; // local idp
-	idp_t _idp_agent; // idp do agent que arranca o código do dominio
+	idp_t _idp_agent; // idp of the agent that starts the domain code 
 
 };
 

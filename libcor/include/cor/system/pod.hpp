@@ -51,7 +51,7 @@ public:
     
     idp_t GetDomainIdp1();
 
-    // // not global function, only local domain, PARA ACABAR
+    // not global function, only local domain
     idp_t GetDomainIdp2(idp_t idp);
 
     // not global function, only local resources predecessor
@@ -214,11 +214,6 @@ protected:
     HPX_DEFINE_COMPONENT_ACTION(Pod, InsertAgentMailbox, InsertAgentMailbox_action_pod);
     HPX_DEFINE_COMPONENT_ACTION(Pod, GetAgentMailbox, GetAgentMailbox_action_pod);
 
-    // HPX_DEFINE_COMPONENT_ACTION(Pod, SendMessage1, SendMessage1_action_pod);
-    // HPX_DEFINE_COMPONENT_ACTION(Pod, SendMessage2, SendMessage2_action_pod);
-    // HPX_DEFINE_COMPONENT_ACTION(Pod, ReceiveMessage1, ReceiveMessage1_action_pod);
-    // HPX_DEFINE_COMPONENT_ACTION(Pod, ReceiveMessage2, ReceiveMessage2_action_pod);
-
     template <typename T>
     struct LoadFunction_action_pod 
     : hpx::actions::make_action<
@@ -229,8 +224,6 @@ protected:
 
 
 private:
-    // std::shared_ptr<Controller_new> _ctrl_new;
-    // Mailer *_mlr;
     Controller *_ctrl;
 
     std::map<std::string, dll::DynamicLibrary*> _modules;

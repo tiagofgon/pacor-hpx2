@@ -1,8 +1,10 @@
-/* ---------- 
--- Tiago Gonçalves - University of Minho, 2021 --
+/*
+    Tiago Gonçalves & António Pina, UM - LIP, 2021
 
-To run: ./corhpx apps ctx 1 0 ../examples/libclient_rpc.so --hpx:ini=hpx.component_paths=../examples
----------- */
+    To run: 
+        ./corhpx apps ctx 1 0 ../examples/libclient_rpc.so --hpx:ini=hpx.component_paths=../examples
+*/
+
 
 #include <iostream>
 

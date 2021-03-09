@@ -245,7 +245,7 @@ unsigned int Controller::GetNumDomains()
     return _rsc_mgr->GetNumDomains();
 }
 
-// acabar isto
+
 std::vector<idp_t> Controller::GetPods()
 {
     return GetDomains();
@@ -255,17 +255,6 @@ std::vector<idp_t> Controller::GetDomains()
 {
     return _rsc_mgr->GetDomains();
 }
-
-
-
-
-
-
-
-
-
-
-
 
 idp_t Controller::GetDomainIdp(idp_t idp)
 {
@@ -312,11 +301,8 @@ void Controller::RemovePredecessorIdpGlobal(idp_t idp)
     return resourceManagerGlobal_object->RemovePredecessorIdp(idp);
 }
 
-
-
 void Controller::InsertDynamicOrganizer_idps(idp_t idp)
 {
-    std::cout << "cacacac4" << std::endl;
     return _rsc_mgr->InsertDynamicOrganizer_idps(idp);
 }
 
@@ -454,7 +440,7 @@ idp_t Controller::Spawn(std::string const& context, unsigned int npods, idp_t pa
 
 
 
-
+// vem da versão anterior
 std::string Controller::GetName() const
 {
     return "naoseiquetediga";

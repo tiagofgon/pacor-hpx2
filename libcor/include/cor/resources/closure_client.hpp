@@ -8,9 +8,6 @@
 
 namespace cor {
 
-class Domain_Client;
-class Pod_Client;
-
 class Closure_Client : hpx::components::client_base<Closure_Client, Closure>
 {
 
@@ -79,6 +76,8 @@ public:
 	{}
 
 
+
+
 	/** Resource's interface **/
 	// method that returns the global idp of the resource, which is present in the class Resource
 	hpx::future<idp_t> IdpGlobal(hpx::launch::async_policy)
@@ -120,22 +119,23 @@ public:
 	}
 
 
+
+
 	/** Static organizer's interface **/
 	hpx::future<void> Join(hpx::launch::async_policy, idp_t idp, std::string const& name)
 	{
 		return hpx::async([&](){
 			typedef Closure::Join_action_Closure action_type;
-			hpx::async<action_type>(this->get_id(), idp, name).get();
+			action_type()(this->get_id(), idp, name);
 
 			// this barrier had to be placed here, and not inside the static organizer because it only works outside of components and the component only accepts one action at a time
 			// synchronization between the elements of the static_organizer, to ensure the insertion of all resources and the same level of synchronization
 			if(_total_members > 1) 
 			{
-				hpx::lcos::barrier barrier(std::to_string(IdpGlobal()), _total_members, GetIdm(hpx::launch::async, idp).get());
+				hpx::lcos::barrier barrier(std::to_string(IdpGlobal()), _total_members, GetIdm(idp));
 				barrier.wait();
 			}
 		});	
-
 	}
 
 	void Join(idp_t idp, std::string const& name)
@@ -260,6 +260,9 @@ public:
 		return action_type()(this->get_id());
 	}
 
+
+
+
 	/** Local Client's interface **/
 	// local idp of this resource
 	hpx::future<idp_t> Idp(hpx::launch::async_policy) {
@@ -291,6 +294,9 @@ public:
 		7 - Barrier
 		8 - Mutex
 		9 - RWMutex
+		10 - Operon
+		11 - UniChannel
+		12 - MultiChannel
 		*/
 		return hpx::make_ready_future(3);
 	}
@@ -310,11 +316,12 @@ public:
 	}
 
 
+
+
 private:
 	hpx::future<hpx::id_type> create_server(idp_t idp, unsigned int total_members, idp_t parent) {
 		return hpx::local_new<Closure>(idp, total_members, parent);
 	}
-
 	hpx::future<hpx::id_type> create_server_remote(idp_t idp, hpx::id_type locality, unsigned int total_members, idp_t parent) {
 		return hpx::new_<Closure>(locality, idp, total_members, parent);
 	}
@@ -326,7 +333,7 @@ private:
 	}
 
 	idp_t _idp; // local idp
-	unsigned int _total_members; // This variable can live here to becouse it's static, here and in the respective component
+	unsigned int _total_members; // This variable can also live here because it is static
 };
 
 
